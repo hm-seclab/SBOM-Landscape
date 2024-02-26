@@ -80,7 +80,7 @@ root.descendants().forEach((d) => {
   const imageSize = d.r * 2; // calculate the size of the image based on the radius of the circle
 
   pattern.append("image")
-      .attr("xlink:href", "/logos/" + d.data.name + ".png") // construct the image URL from the node's name
+      .attr("xlink:href", "logos/" + d.data.name + ".png") // construct the image URL from the node's name
       .attr("height", imageSize) // set the size of the image
       .attr("width", imageSize) // set the size of the image
       .attr("x", 0) // center the image horizontally

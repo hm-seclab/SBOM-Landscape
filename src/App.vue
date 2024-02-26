@@ -21,10 +21,10 @@ const filteredTreeData = ref()
 const selectedItem= ref('HowTo')
 
 onBeforeMount(() => {
-  axios.get('/SBOM-Landscape/filters.yaml').then(x => {
+  axios.get('filters.yaml').then(x => {
     load(x.data).forEach(filter => filters.push(filter));
   })
-  axios.get('/SBOM-Landscape/data.yaml').then(x => {
+  axios.get('data.yaml').then(x => {
     rawdata.value = load(x.data)
   })
 })
