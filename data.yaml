@@ -277,8 +277,8 @@
     - Go
 
 - Name: CycloneDx_Node_Module
-  link: https://github.com/CycloneDX/cyclonedx-node-module
-  publisher: CycloneDx
+  Link: https://github.com/CycloneDX/cyclonedx-node-module
+  Publisher: CycloneDx
   License: OpenSource
   Standards:
     - CycloneDx
