@@ -1,6 +1,8 @@
 # SBOM Landscape
 
-This is a **Work in Progress** Project to implement an SBOM Landscape similar to the [Landscape of the Cloud Native Computing Foundation](https://landscape.cncf.io/).
+This is a **Work in Progress** Project to implement an SBOM Landscape similar to the [Landscape of the Cloud Native Computing Foundation](https://landscape.cncf.io/). 
+
+This project is part of the [SBOM Everywhere SIG](https://github.com/ossf/sbom-everywhere) at the OpenSSF and discussed in the [meetings](https://docs.google.com/document/d/193ODRga1F49WKPYYR79SNi9b27mChBqpOf5iiWJcMso/edit).
 
 ## How to contribute your tool
 If you know of a tool or project that should be listed here, please open an Issue. There are three things to consider while adding a new tool:
