@@ -15,16 +15,15 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Use Node.js LTS
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 'lts/*'
-      - run: npm install
-      - run: npm run build
+
+      - name: Install and Build
+      - run: npm ci && npm run build
 
       - name: Deploy
-        uses: actions/deploy-pages@v1
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-
-
+          folder: dist
+          branch: gh-pages
