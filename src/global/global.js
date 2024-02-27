@@ -24,16 +24,17 @@ function generateTreeObjectInternal(filters, rawData) {
     let distinctAttributes = retrieveDistinctAttributes(currentFilter, rawData)
 
     for (let item of distinctAttributes) {
+        // if you remove that filters that are null are bypassed in the tree, so they are also displayed to the end.
+        if (item == null) continue;
 
         let entry = {name: item}
 
         if (remainingFilters.length !== 0) {
             let subdata = filterAttributes(currentFilter, rawData, item)
             entry.children = generateTreeObjectInternal(remainingFilters, subdata)
-        } else {
-            entry.value = 1
         }
 
+        entry.value = 1
         result.push(entry)
     }
 
