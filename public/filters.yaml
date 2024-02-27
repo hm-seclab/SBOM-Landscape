@@ -22,6 +22,6 @@
   enabled: true
   description: The Name of the SBOM related tool
 
-#- name: Language
-#  enabled: false
-#  description: Filter to distinguish between different programming languages, build tools or operating systems
+- name: Language
+  enabled: false
+  description: Filter to distinguish between different programming languages, build tools or operating systems
