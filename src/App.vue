@@ -97,7 +97,10 @@ watch(filters, (newFilters, oldFilters) => {
       </draggable>
 
       <div style="margin-top: auto">
-        <a href="https://gitlab.com/Mariuxdeangelo/sbom-landscape/" target="_blank">
+        <a href="https://seclab.cs.hm.edu/imprint/" target="_blank" style="text-decoration: none">
+          <p class="text-300 hover:text-500">Imprint</p>
+        </a>
+        <a href="https://github.com/hm-seclab/SBOM-Landscape/" target="_blank">
           <p-button label="Contribute on GitHub" icon="pi pi-github"
                     rounded outlined severity="secondary" class="w-full"/>
         </a>
