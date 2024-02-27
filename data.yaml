@@ -405,7 +405,7 @@
   Type:
     - Source
   Language:
-    - npm
+    - Npm
 
 - Name: ORT
   Link: https://github.com/oss-review-toolkit/ort
@@ -536,7 +536,7 @@
   Type:
     - Source
   Language:
-    - generic
+    - Generic
 
 - Name: Sbom4python
   Link: https://github.com/anthonyharrison/sbom4python
