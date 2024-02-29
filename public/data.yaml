@@ -480,7 +480,7 @@
     - SPDX
   Abilities:
     - Consume
-    - Translate
+    - Convert
     - Merge
   Type:
   Language:
@@ -493,7 +493,7 @@
     - SPDX
   Abilities:
     - Consume
-    - Translate
+    - Convert
     - Compare
   Type:
   Language:
@@ -506,7 +506,7 @@
     - SPDX
   Abilities:
     - Consume
-    - Translate
+    - Convert
     - Compare
     - Validate
   Type:

@@ -6,17 +6,17 @@ This project is part of the [SBOM Everywhere SIG](https://github.com/ossf/sbom-e
 
 The POC can be found [here](https://hm-seclab.github.io/SBOM-Landscape/)
 
-## How to contribute your tool
-If you know of a tool or project that should be listed here, please open an Issue. There are three things to consider while adding a new tool:
+## How to add your tool
+If you know of a tool or project that should be listed here, please open an Issue or add a MergeRequest. There are three things to consider while adding a new tool:
 
 ### 1. Add a new entry
-The /public/data.yaml contains all the information a user can search on the page. Just add a new entry to the list of tools. Please follow the following convention regarding the values. Please also refer to the tool's source, where the features are documented.
+The /public/data.yaml contains all the information a user can search on the page. Add a new entry to the list of tools. Please follow the following convention regarding the values. Please also refer to the tool's source, where the features are documented.
 
 ##### Name
-The name of the tool as to be distinct in the list and is used as an identifier.
+The name of the tool. This should be distinct in the list and is used as an identifier.
 
 ##### Publisher
-The publisher refers to the company or institution that is maintaining the tool. It should be spelled similarly each time so users can find all tools from the same publisher.
+The Publisher refers to the company or institution maintaining the tool. It should be spelled similarly each time so users can find all tools from the same publisher.
 
 ##### Standards
 A list of Standards a tool can produce. Currently, the three standards which are recognized by the [NTIA](https://www.ntia.gov/sites/default/files/publications/sbom_formats_survey-version-2021_0.pdf) are supported:
@@ -26,14 +26,17 @@ A list of Standards a tool can produce. Currently, the three standards which are
 
 ##### Abilities
 Abilities describe the capabilities of the tool. In what part of the software development lifecycle can the tool be used? The following abilities are supported:
-- Generate
-- Convert
-- Edit
-- Consume
+- **Compare**   - *Can compare two SBOMs*
+- **Consume**   - *Can use a provided SBOM in some form*
+- **Convert**   - *Can Convert between formats (SPDX, CycloneDX), versions or file-formats (json, xml)*
+- **Edit**      - *Can somehow edit the contents of a SBOM*
+- **Generate**  - *Can automatically generate a SBOM*
+- **Merge**     - *Can merge several SBOMs*
+- **Validate**  - *Can validate a SBOM against the file schema or requirements like defined by the NTIA*
 
 ##### Type
 SBOMs may contain different forms of the minimum information sourced from different
-product artifacts. The following types are supported as published by the [NTIA](https://www.cisa.gov/resources-tools/resources/types-software-bill-materials-sbom). Because many tools specifically support the scanning of container images, the category *Container* is added additionally. Even if container scans can be considered *Analyzed*:
+product artifacts. The following types are supported as published by the [NTIA](https://www.cisa.gov/resources-tools/resources/types-software-bill-materials-sbom). Because many tools specifically support the scanning of container images, the category **Container** is added additionally. Even if container scans can be considered *Analyzed*:
 - Design
 - Source
 - Build
@@ -48,6 +51,26 @@ You can add a detailed description to the /public/descriptions folder. The descr
 ### 3. Add a logo
 You can add a logo to the /public/logos folder. The logo should be named after the tool (Same name as in the data.yaml). The logo should be a PNG file with a transparent background. The logo should be 200px x 200px.
 
-The logo will be displayed on the page in the Map-view, in the List-view and in the details- section. You add Logos for all categories. Also for the Publisher.
+The logo will be displayed on the page in the Map-view, in the List-view and in the details- section. You can add Logos for all categories. Also for the Publisher.
 
-If you add a Logo, we assume your project and company are OK with that. The logo should be used under the fair use policy. If you want to remove your logo, please open an issue.
+If you add a Logo, we assume your project and/or company are OK with that. The logo should be used under the fair use policy. If you want to remove your logo, please open an issue and we will remove it as soon as possible.
+
+## Shoutout 
+
+A shoutout goes to D3JS for providing such a great library to visualize and interact with data. I stand on the shoulders of giants with this tooling. Also thanks go to the people from vue.js who just provide a great JavaScript framework.
+
+Special thanks to [Mike Bostock](https://observablehq.com/@d3/zoomable-circle-packing?intent=fork) for sharing their examples and snippeds used under the [ISC License](https://choosealicense.com/licenses/isc/) to provide the different views in the landscape.
+
+<details><summary>ISC License</summary>
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+</details>
