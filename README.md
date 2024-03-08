@@ -59,7 +59,7 @@ If you add a Logo, we assume your project and/or company are OK with that. The l
 
 A shoutout goes to D3JS for providing such a great library to visualize and interact with data. I stand on the shoulders of giants with this tooling. Also thanks go to the people from vue.js who just provide a great JavaScript framework.
 
-Special thanks to [Mike Bostock](https://observablehq.com/@d3/zoomable-circle-packing?intent=fork) for sharing their examples and snippeds used under the [ISC License](https://choosealicense.com/licenses/isc/) to provide the different views in the landscape.
+Special thanks to [Mike Bostock](https://observablehq.com/@d3/zoomable-circle-packing?intent=fork) for sharing their examples and snippets used under the [ISC License](https://choosealicense.com/licenses/isc/) to provide the different views in the landscape.
 
 <details><summary>ISC License</summary>
 Permission to use, copy, modify, and/or distribute this software for any
