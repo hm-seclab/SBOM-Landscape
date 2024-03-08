@@ -10,7 +10,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
-    "axios": "^1.5.1",
+    "axios": "^1.6.7",
     "d3": "^7.8.5",
     "highlight.js": "^11.9.0",
     "js-yaml": "^4.1.0",
