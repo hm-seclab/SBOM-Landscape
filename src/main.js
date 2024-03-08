@@ -17,12 +17,16 @@ import Divider from "primevue/divider";
 import InputText from "primevue/inputtext";
 import Tooltip from 'primevue/tooltip';
 import Tag from "primevue/tag";
+import ButtonGroup from "primevue/buttongroup";
+import InputIcon from "primevue/inputicon";
+import IconField from "primevue/iconfield";
 
 const app = createApp(App);
 
 app.use(PrimeVue)
 
 app.component('p-button', Button)
+app.component('p-buttonGroup', ButtonGroup)
 app.component("p-dataTable", DataTable)
 app.component("p-column", Column)
 app.component("p-chip", Chip)
@@ -30,6 +34,9 @@ app.component("p-card", Card)
 app.component("p-inputSwitch", InputSwitch)
 app.component("p-divider", Divider)
 app.component('p-inputText', InputText)
+app.component('p-iconField', IconField)
+app.component('p-inputIcon', InputIcon)
+
 app.component('p-tag', Tag)
 
 app.directive('tooltip', Tooltip);

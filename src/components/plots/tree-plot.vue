@@ -227,10 +227,10 @@ function generateTreeObjectFlat() {
 
 <template>
   <div class="overlay">
-    <span class="p-buttonset m-2 w-full">
+    <p-buttonGroup>
       <p-button label="Round" rounded :outlined="activeView !== 0" :severity="activeView === 0 ? '' : 'secondary'" @click="onViewChange(0)"/>
       <p-button label="Flat" rounded :outlined="activeView !== 1" :severity="activeView === 1 ? '' : 'secondary'" @click="onViewChange(1)"/>
-    </span>
+    </p-buttonGroup>
   </div>
 
   <div :class="scrollableDiv ? 'scrollable-div' : 'flex'">

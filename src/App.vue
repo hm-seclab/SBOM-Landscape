@@ -65,13 +65,16 @@ watch(filters, (newFilters, oldFilters) => {
 <template>
   <div class="flex overflow-hidden grid max-h-full m-0">
     <div class="flex-column flex col-2 surface-50 full-vue-heigth shadow-right scrollable-div">
-      <span class="p-buttonset mb-2 w-full">
-        <p-button label="Circle" rounded :outlined="activeView !== 1" :severity="activeView === 1 ? '' : 'secondary'" @click="onViewChange(1)" class="w-4"/>
-        <p-button label="Tree" rounded :outlined="activeView !== 2" :severity="activeView === 2 ? '' : 'secondary'" @click="onViewChange(2)" class="w-4"/>
-        <p-button label="List" rounded :outlined="activeView !== 3" :severity="activeView === 3 ? '' : 'secondary'" @click="onViewChange(3)" class="w-4"/>
-      </span>
 
-      <span class="p-buttonset w-full">
+      <div class="mb-2 w-full">
+        <p-buttonGroup>
+          <p-button label="Circle" rounded :outlined="activeView !== 1" :severity="activeView === 1 ? '' : 'secondary'" @click="onViewChange(1)" class="w-4"/>
+          <p-button label="Tree" rounded :outlined="activeView !== 2" :severity="activeView === 2 ? '' : 'secondary'" @click="onViewChange(2)" class="w-4"/>
+          <p-button label="List" rounded :outlined="activeView !== 3" :severity="activeView === 3 ? '' : 'secondary'" @click="onViewChange(3)" class="w-4"/>
+        </p-buttonGroup>
+        </div>
+
+      <p-buttonGroup>
         <p-button label="Normalize" rounded :outlined="activeMode !== 'normalize'"
                   :severity="activeMode === 'normalize' ? '' : 'secondary'"
                   @click="onModeChange('normalize')" class="w-6"
@@ -80,7 +83,7 @@ watch(filters, (newFilters, oldFilters) => {
                   :severity="activeMode === 'aggregate' ? '' : 'secondary'"
                   @click="onModeChange('aggregate')" class="w-6"
                   v-tooltip="{ value: 'This mode groups entries by their categories to reduce duplication. If an entry belongs to multiple categories, it will only be displayed once, under a group that represents those categories. This is useful when you want a simplified view of the data, without repeated entries.', showDelay: 750, hideDelay: 300 }"/>
-      </span>
+      </p-buttonGroup>
 
       <p-divider/>
 

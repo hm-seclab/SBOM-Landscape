@@ -41,10 +41,10 @@ const filters = ref({
       <template #header>
         <div class="flex justify-content-between align-items-center">
           <h2>List of all SBOM related Tools:</h2>
-          <span class="p-input-icon-left">
-                <i class="pi pi-search"/>
+          <p-iconField iconPosition="left">
+                <p-inputIcon class="pi pi-search"/>
                 <p-inputText v-model="filters['global'].value" placeholder="Search"/>
-            </span>
+          </p-iconField>
         </div>
       </template>
 
