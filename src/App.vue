@@ -1,40 +1,55 @@
-<script setup>
-import {onBeforeMount, reactive, ref, watch} from "vue";
-import TreePlot from "./components/plots/tree-plot.vue";
-import ListPlot from "./components/plots/list-plot.vue";
+<script lang="ts" setup>
+import {onBeforeMount, reactive, Ref, ref, watch} from "vue";
 import axios from "axios";
-import {load} from "js-yaml";
+import { load } from "js-yaml";
 import draggable from 'vuedraggable'
 import {aggregateList, generateTreeObject, normaliseList} from "./global/global.js";
+import TreePlot from "./components/plots/tree-plot.vue";
+import ListPlot from "./components/plots/list-plot.vue";
 import MarkdownParser from "./components/markdownParser.vue";
 import CirclePlot from "./components/plots/circle-plot.vue";
 import DetailEnumeration from "./components/detail-enumeration.vue";
+import type { Tool } from "./types/tool";
+import type { Filter } from "./types/filter";
 
-const activeView = ref(1)
-const activeMode = ref('normalize')
-const filters = reactive([])
+enum AggregationModes {
+  Normalize,
+  Aggregate
+}
 
-const rawdata = ref([])
+enum ViewMode {
+  Circle,
+  Tree,
+  List
+}
+
+const activeViewMode: Ref<ViewMode> = ref(ViewMode.Circle)
+const activeAggregationMode: Ref<AggregationModes> = ref(AggregationModes.Normalize)
+
+const rawdata: Ref<Array<Tool>> = ref([])
+const filters = reactive<Filter[]>([]);
+
 const formattedData = ref([])
 const filteredTreeData = ref()
 
-const selectedItem= ref('HowTo')
+const selectedItem: Ref<string> = ref('HowTo')
 
 onBeforeMount(() => {
   axios.get('filters.yaml').then(x => {
-    load(x.data).forEach(filter => filters.push(filter));
+    load(x.data).forEach((filter: Filter) => filters.push(filter))
   })
   axios.get('data.yaml').then(x => {
     rawdata.value = load(x.data)
   })
 })
 
-function onViewChange(view) {
-  activeView.value = view
+function onViewChange(view: ViewMode) {
+  activeViewMode.value = view
 }
 
-function onModeChange(mode) {
-  activeMode.value = mode
+function onAggregationModeChange(mode: AggregationModes) {
+  console.log("Recalculating AggregationModeChange")
+  activeAggregationMode.value = mode
   recalculateAllData(filters, rawdata.value)
 }
 
@@ -44,7 +59,7 @@ const updateFilters = (event) => {
 };
 
 function recalculateAllData(currentFilters, currentRawData) {
-  if (activeMode.value === 'normalize') {
+  if (activeAggregationMode.value === AggregationModes.Normalize) {
     formattedData.value = normaliseList(currentRawData)
   } else {
     formattedData.value = aggregateList(currentRawData)
@@ -68,20 +83,20 @@ watch(filters, (newFilters, oldFilters) => {
 
       <div class="mb-2 w-full">
         <p-buttonGroup>
-          <p-button label="Circle" rounded :outlined="activeView !== 1" :severity="activeView === 1 ? '' : 'secondary'" @click="onViewChange(1)" class="w-4"/>
-          <p-button label="Tree" rounded :outlined="activeView !== 2" :severity="activeView === 2 ? '' : 'secondary'" @click="onViewChange(2)" class="w-4"/>
-          <p-button label="List" rounded :outlined="activeView !== 3" :severity="activeView === 3 ? '' : 'secondary'" @click="onViewChange(3)" class="w-4"/>
+          <p-button label="Circle" rounded :outlined="activeViewMode !== ViewMode.Circle" :severity="activeViewMode === ViewMode.Circle ? '' : 'secondary'" @click="onViewChange(ViewMode.Circle)" class="w-4"/>
+          <p-button label="Tree" rounded :outlined="activeViewMode !== ViewMode.Tree" :severity="activeViewMode === ViewMode.Tree ? '' : 'secondary'" @click="onViewChange(ViewMode.Tree)" class="w-4"/>
+          <p-button label="List" rounded :outlined="activeViewMode !== ViewMode.List" :severity="activeViewMode === ViewMode.List ? '' : 'secondary'" @click="onViewChange(ViewMode.List)" class="w-4"/>
         </p-buttonGroup>
         </div>
 
       <p-buttonGroup>
-        <p-button label="Normalize" rounded :outlined="activeMode !== 'normalize'"
-                  :severity="activeMode === 'normalize' ? '' : 'secondary'"
-                  @click="onModeChange('normalize')" class="w-6"
+        <p-button label="Normalize" rounded :outlined="activeAggregationMode !== AggregationModes.Normalize"
+                  :severity="activeAggregationMode === AggregationModes.Normalize ? '' : 'secondary'"
+                  @click="onAggregationModeChange(AggregationModes.Normalize)" class="w-6"
                   v-tooltip="{ value: 'This mode displays each entry in its original form, without any grouping. This means that an entry can appear multiple times if it belongs to multiple categories. This is useful when you want to see all instances of an entry, regardless of its category.', showDelay: 750, hideDelay: 300 }"/>
-        <p-button label="Aggregate" rounded :outlined="activeMode !== 'aggregate'"
-                  :severity="activeMode === 'aggregate' ? '' : 'secondary'"
-                  @click="onModeChange('aggregate')" class="w-6"
+        <p-button label="Aggregate" rounded :outlined="activeAggregationMode !== AggregationModes.Aggregate"
+                  :severity="activeAggregationMode === AggregationModes.Aggregate ? '' : 'secondary'"
+                  @click="onAggregationModeChange(AggregationModes.Aggregate)" class="w-6"
                   v-tooltip="{ value: 'This mode groups entries by their categories to reduce duplication. If an entry belongs to multiple categories, it will only be displayed once, under a group that represents those categories. This is useful when you want a simplified view of the data, without repeated entries.', showDelay: 750, hideDelay: 300 }"/>
       </p-buttonGroup>
 
@@ -112,10 +127,9 @@ watch(filters, (newFilters, oldFilters) => {
     <div id="workbench" class="flex-grow-1 flex col full-vue-heigth">
 
       <div v-if="filteredTreeData" class="flex-grow-1 flex col full-vue-heigth">
-<!--        <network-plot v-else-if="activeView === 1" :data="rawdata" v-model:selected-item="selectedItem"/>-->
-        <circle-plot v-if="activeView === 1" :data="filteredTreeData" v-model:selected-item="selectedItem"/>
-        <tree-plot v-else-if="activeView === 2" :data="filteredTreeData" v-model:selected-item="selectedItem"/>
-        <list-plot v-else-if="activeView === 3" :data="rawdata" :filters="filters" v-model:selected-item="selectedItem"/>
+        <circle-plot v-if="activeViewMode === ViewMode.Circle" :data="filteredTreeData" v-model:selected-item="selectedItem"/>
+        <tree-plot v-else-if="activeViewMode === ViewMode.Tree" :data="filteredTreeData" v-model:selected-item="selectedItem"/>
+        <list-plot v-else-if="activeViewMode === ViewMode.List" :data="rawdata" :filters="filters" v-model:selected-item="selectedItem"/>
       </div>
     </div>
 
