@@ -23,6 +23,7 @@
     "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
     "@vitejs/plugin-vue": "^4.6.2",
     "gh-pages": "^6.1.1",
     "typescript": "^5.4.3",

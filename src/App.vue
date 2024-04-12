@@ -3,7 +3,7 @@ import {onBeforeMount, reactive, Ref, ref, watch} from "vue";
 import axios from "axios";
 import { load } from "js-yaml";
 import draggable from 'vuedraggable'
-import {aggregateList, generateTreeObject, normaliseList} from "./global/global.js";
+import {aggregateList, generateTreeObject, normaliseList} from "./global/global.ts";
 import TreePlot from "./components/plots/tree-plot.vue";
 import ListPlot from "./components/plots/list-plot.vue";
 import MarkdownParser from "./components/markdownParser.vue";
@@ -26,20 +26,21 @@ enum ViewMode {
 const activeViewMode: Ref<ViewMode> = ref(ViewMode.Circle)
 const activeAggregationMode: Ref<AggregationModes> = ref(AggregationModes.Normalize)
 
-const rawdata: Ref<Array<Tool>> = ref([])
+const rawdata: Ref<Tool[]> = ref([])
 const filters = reactive<Filter[]>([]);
 
-const formattedData = ref([])
+const formattedData: Ref<Tool[]> = ref([])
 const filteredTreeData = ref()
 
 const selectedItem: Ref<string> = ref('HowTo')
 
 onBeforeMount(() => {
   axios.get('filters.yaml').then(x => {
-    load(x.data).forEach((filter: Filter) => filters.push(filter))
+    let filters: Filter[] = load(x.data) as Filter[]
+    filters.forEach((filter: Filter) => filters.push(filter))
   })
   axios.get('data.yaml').then(x => {
-    rawdata.value = load(x.data)
+    rawdata.value = load(x.data) as Tool[]
   })
 })
 
@@ -58,7 +59,7 @@ const updateFilters = (event) => {
   filters.splice(event.newIndex, 0, movedItem);
 };
 
-function recalculateAllData(currentFilters, currentRawData) {
+function recalculateAllData(currentFilters: Filter[], currentRawData: Tool[]) {
   if (activeAggregationMode.value === AggregationModes.Normalize) {
     formattedData.value = normaliseList(currentRawData)
   } else {
