@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 import {onMounted, ref, watch} from "vue";
 import {FilterMatchMode} from "primevue/api";
 

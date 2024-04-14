@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 import {onMounted, ref, watch} from "vue";
 import axios from 'axios';
 import {Marked} from "marked";
@@ -12,11 +12,11 @@ onMounted(() => {
   loadMarkdown(props.selected)
 })
 
-watch(() => props.selected, (newSelected, oldSelected) => {
+watch(() => props.selected, (newSelected) => {
   loadMarkdown(newSelected)
 })
 
-function loadMarkdown(newSelected) {
+function loadMarkdown(newSelected: string) {
   const marked = new Marked(
       markedHighlight({
         langPrefix: 'hljs language-',
@@ -29,7 +29,7 @@ function loadMarkdown(newSelected) {
 
   axios.get('descriptions/' + newSelected + '.md').then(mark => {
     mdres.value = marked.parse(mark.data)
-  }).catch(err => {
+  }).catch(() => {
     mdres.value = marked.parse('*No description available*')
   })
 }

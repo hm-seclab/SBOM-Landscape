@@ -3,7 +3,7 @@ import {onBeforeMount, reactive, Ref, ref, watch} from "vue";
 import axios from "axios";
 import { load } from "js-yaml";
 import draggable from 'vuedraggable'
-import {aggregateList, generateTreeObject, normaliseList} from "./global/global.ts";
+import {aggregateList, deepClone, generateTreeObject, normaliseList} from "./global/global.ts";
 import TreePlot from "./components/plots/tree-plot.vue";
 import ListPlot from "./components/plots/list-plot.vue";
 import MarkdownParser from "./components/markdownParser.vue";
@@ -36,8 +36,8 @@ const selectedItem: Ref<string> = ref('HowTo')
 
 onBeforeMount(() => {
   axios.get('filters.yaml').then(x => {
-    let filters: Filter[] = load(x.data) as Filter[]
-    filters.forEach((filter: Filter) => filters.push(filter))
+    let filterList: Filter[] = load(x.data) as Filter[]
+    filterList.forEach((filter: Filter) => filters.push(filter))
   })
   axios.get('data.yaml').then(x => {
     rawdata.value = load(x.data) as Tool[]
@@ -45,34 +45,36 @@ onBeforeMount(() => {
 })
 
 function onViewChange(view: ViewMode) {
+  console.log("View changed: " + view)
   activeViewMode.value = view
 }
 
 function onAggregationModeChange(mode: AggregationModes) {
-  console.log("Recalculating AggregationModeChange")
+  console.log("AggregationModeChange: " + mode)
   activeAggregationMode.value = mode
   recalculateAllData(filters, rawdata.value)
 }
 
-const updateFilters = (event) => {
+const updateFilters = (event: any) => {
   const movedItem = filters.splice(event.oldIndex, 1)[0];
   filters.splice(event.newIndex, 0, movedItem);
 };
 
 function recalculateAllData(currentFilters: Filter[], currentRawData: Tool[]) {
   if (activeAggregationMode.value === AggregationModes.Normalize) {
-    formattedData.value = normaliseList(currentRawData)
-  } else {
-    formattedData.value = aggregateList(currentRawData)
+    formattedData.value = normaliseList(deepClone(currentRawData))
+  } else if (activeAggregationMode.value === AggregationModes.Aggregate) {
+    formattedData.value = aggregateList(deepClone(currentRawData))
   }
+  console.log(formattedData.value)
   filteredTreeData.value = generateTreeObject(currentFilters, formattedData.value)
 }
 
-watch(rawdata, (newRawData, oldRawData) => {
+watch(rawdata, (newRawData) => {
   recalculateAllData(filters, newRawData)
 })
 
-watch(filters, (newFilters, oldFilters) => {
+watch(filters, (newFilters) => {
   recalculateAllData(newFilters, rawdata.value)
 })
 
@@ -126,7 +128,6 @@ watch(filters, (newFilters, oldFilters) => {
       </div>
     </div>
     <div id="workbench" class="flex-grow-1 flex col full-vue-heigth">
-
       <div v-if="filteredTreeData" class="flex-grow-1 flex col full-vue-heigth">
         <circle-plot v-if="activeViewMode === ViewMode.Circle" :data="filteredTreeData" v-model:selected-item="selectedItem"/>
         <tree-plot v-else-if="activeViewMode === ViewMode.Tree" :data="filteredTreeData" v-model:selected-item="selectedItem"/>

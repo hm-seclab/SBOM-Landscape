@@ -1,11 +1,11 @@
-<script setup>
+<script lang="ts" setup>
 import {ref, watch} from "vue";
 
 const props = defineProps(['selected', 'rawdata'])
 
 const selectedObject = ref(null)
 
-watch(() => props.selected, (newVal, oldVal) => {
+watch(() => props.selected, (newVal) => {
   selectedObject.value = null
   selectedObject.value = props.rawdata.find(x => x.Name === newVal)
 })
@@ -18,7 +18,7 @@ watch(() => props.selected, (newVal, oldVal) => {
       <tr v-for="(value, key) in selectedObject" :key="key">
         <th v-if="typeof value === 'string'" class="text-left">{{ key }}: </th>
         <td v-if="typeof value === 'string'" class="white-space-nowrap overflow-hidden text-overflow-ellipsis">
-          <div v-if="key === 'Link'">
+          <div v-if="value === 'Link'">
             <a :href="value" target="_blank">{{ value }}</a>
           </div>
           <div v-else>

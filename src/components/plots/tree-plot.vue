@@ -1,8 +1,7 @@
 <script setup>
 
 import {onMounted, ref, watch} from "vue";
-import * as d3 from 'd3';
-import data from '../../assets/data.json';
+import * as d3 from "d3";
 
 const selected = ref()
 const props = defineProps(['data', 'selectedItem'])

@@ -4,6 +4,6 @@ import vue from '@vitejs/plugin-vue'
 // https://vitejs.dev/config/
 export default defineConfig({
   assetsInclude: ['**/*.yaml'],
-  base: '/SBOM-Landscape',
+  base: '/SBOM-Landscape/',
   plugins: [vue()],
 })

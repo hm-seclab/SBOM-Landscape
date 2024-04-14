@@ -56,7 +56,14 @@ function filterAttributes(currentFilterPointer: Filter, tools: Tool[], currentFi
     let values: Tool[] = []
 
     for (let item of tools) {
-        if (item[currentFilterPointer.name] === currentFilter) {
+        let attributeValue: string
+        if (Array.isArray(item[currentFilterPointer.name])){
+            attributeValue = (item[currentFilterPointer.name] as Array<string>).join("-")
+        } else {
+            attributeValue = item[currentFilterPointer.name] as string
+        }
+
+        if (attributeValue === currentFilter) {
             values.push(item)
         }
     }
@@ -64,12 +71,19 @@ function filterAttributes(currentFilterPointer: Filter, tools: Tool[], currentFi
     return values;
 }
 
-function retrieveDistinctAttributes(currentFilter: Filter, tools: Tool[]):Set<String> {
+function retrieveDistinctAttributes(currentFilter: Filter, tools: Tool[]):Set<string> {
     let distinctValues: Set<string> = new Set<string>()
 
     for (let item of tools) {
         let attributeName: keyof Tool = currentFilter.name
-        let attributeValue: string  = item[attributeName] as string
+        let attributeValue: string
+
+        if (Array.isArray(item[attributeName])){
+            attributeValue = (item[attributeName] as Array<string>).join("-")
+        } else {
+            attributeValue = item[attributeName] as string
+        }
+
         distinctValues.add(attributeValue)
     }
 
@@ -86,9 +100,9 @@ export function normaliseList(tools: Tool[]): Tool[] {
     for (let entry of tools) {
         let noArray: boolean = true
         for (let key in entry) {
-            if (entry[key as keyof Tool] instanceof Array) {
+            if (Array.isArray(entry[key as keyof Tool])) {
                 let itemList: string[] = entry[key as keyof Tool] as string[]
-                if (itemList.length < 2) {
+                if (itemList.length != 1) {
                     noArray = false
                     for (let item of itemList) {
                         let clone: Tool = deepClone(entry)
@@ -114,6 +128,7 @@ export function normaliseList(tools: Tool[]): Tool[] {
         return normaliseList(result)
     }
 
+    console.log(result)
     return result;
 }
 
